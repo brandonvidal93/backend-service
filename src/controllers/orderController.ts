@@ -35,23 +35,36 @@ export const getOrderById = async (req: Request, res: Response) => {
 };
 
 // POST - Crear un nuevo pedido
-export const createOrder = async (req: Request, res: Response) => {
+export const createOrder = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { orderDate, customerName, productId } = req.body;
+
+    // Verificar que los campos necesarios están presentes en el body
+    if (!orderDate || !customerName || !productId) {
+      return res.status(400).json({ message: "Faltan datos en la solicitud." });
+    }
+
+    // Buscar el producto relacionado
     const product = await productRepository.findOneBy({ id: productId });
+    
     if (!product) {
       return res.status(404).json({ message: "Producto no encontrado." });
     }
 
+    // Crear el nuevo pedido
     const order = new Order();
     order.orderDate = orderDate;
     order.customerName = customerName;
     order.product = product;
 
+    // Guardar el pedido en la base de datos
     await orderRepository.save(order);
-    res.status(201).json(order);
+
+    // Devolver el pedido creado con código 201
+    return res.status(201).json(order);
   } catch (error) {
-    res.status(500).json({ message: "Error al crear el pedido." });
+    console.error(error);
+    return res.status(500).json({ message: "Error al crear el pedido." });
   }
 };
 
