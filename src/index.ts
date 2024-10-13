@@ -18,7 +18,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 
 // Documentación Swagger
-app.use("/api/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 // Inicialización de la base de datos y el servidor
 AppDataSource.initialize()
