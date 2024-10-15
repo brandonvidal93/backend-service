@@ -4,7 +4,7 @@ import {
   getOrderById,
   deleteOrder,
   createOrder,
-  updateOrder,
+  // updateOrder,
 } from "../controllers/orderController";
 
 const orderRoutes = Router();
@@ -111,7 +111,7 @@ orderRoutes.post("/", createOrder);
  *       400:
  *         description: Error en la solicitud.
  */
-orderRoutes.put("/:id", updateOrder);
+orderRoutes.put("/:id");
 
 /**
  * @swagger
