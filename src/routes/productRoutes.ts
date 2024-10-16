@@ -11,9 +11,17 @@ const productRoutes = Router();
 
 /**
  * @swagger
+ * tags:
+ *   name: Products
+ *   description: CRUD relacionado con productos
+ */
+
+/**
+ * @swagger
  * /api/products:
  *   get:
  *     summary: Obtener todos los productos
+ *     tags: [Products]
  *     responses:
  *       200:
  *         description: Lista de productos
@@ -25,6 +33,7 @@ productRoutes.get("/", getAllProducts);
  * /api/products/{id}:
  *   get:
  *     summary: Obtener un producto por ID
+ *     tags: [Products]
  *     parameters:
  *       - in: path
  *         name: id
@@ -45,6 +54,7 @@ productRoutes.get("/:id", getProductById);
  * /api/products:
  *   post:
  *     summary: Crear un nuevo producto
+ *     tags: [Products]
  *     requestBody:
  *       required: true
  *       content:
@@ -75,6 +85,7 @@ productRoutes.post("/", createProduct);
  * /api/products/{id}:
  *   put:
  *     summary: Actualizar un producto existente
+ *     tags: [Products]
  *     parameters:
  *       - in: path
  *         name: id
@@ -110,6 +121,7 @@ productRoutes.put("/:id", updateProduct);
  * /api/products/{id}:
  *   delete:
  *     summary: Eliminar un producto
+ *     tags: [Products]
  *     parameters:
  *       - in: path
  *         name: id

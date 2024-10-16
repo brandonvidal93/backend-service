@@ -5,14 +5,20 @@ import {
   deleteOrder,
   createOrder,
   updateOrder,
-  // updateOrder,
 } from "../controllers/orderController";
 
 const orderRoutes = Router();
 
 /**
  * @swagger
- * /orders:
+ * tags:
+ *   name: Orders
+ *   description: CRUD Relacionado con Orders
+ */
+
+/**
+ * @swagger
+ * /api/orders:
  *   get:
  *     summary: Obtiene una lista de todos los pedidos
  *     description: Retorna todos los pedidos almacenados en el sistema.
@@ -20,18 +26,12 @@ const orderRoutes = Router();
  *     responses:
  *       200:
  *         description: Una lista de pedidos.
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Order'
  */
 orderRoutes.get("/", getAllOrders);
 
 /**
  * @swagger
- * /orders/{id}:
+ * /api/orders/{id}:
  *   get:
  *     summary: Obtiene un pedido por su ID
  *     description: Retorna un pedido específico basado en su ID.
@@ -46,10 +46,6 @@ orderRoutes.get("/", getAllOrders);
  *     responses:
  *       200:
  *         description: Pedido obtenido exitosamente.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Order'
  *       404:
  *         description: Pedido no encontrado.
  */
@@ -57,7 +53,7 @@ orderRoutes.get("/:id", getOrderById);
 
 /**
  * @swagger
- * /orders:
+ * /api/orders:
  *   post:
  *     summary: Crea un nuevo pedido
  *     description: Crea un nuevo pedido en el sistema.
@@ -67,14 +63,21 @@ orderRoutes.get("/:id", getOrderById);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Order'
+ *             type: object
+ *             required:
+ *               - orderDate
+ *               - customerName
+ *               - productId
+ *             properties:
+ *               orderDate:
+ *                 type: string
+ *               customerName:
+ *                 type: string
+ *               productId:
+ *                 type: number
  *     responses:
  *       201:
  *         description: Pedido creado exitosamente.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Order'
  *       400:
  *         description: Error en la solicitud.
  */
@@ -82,7 +85,7 @@ orderRoutes.post("/", createOrder);
 
 /**
  * @swagger
- * /orders/{id}:
+ * /api/orders/{id}:
  *   put:
  *     summary: Actualiza un pedido existente
  *     description: Actualiza los detalles de un pedido existente basado en su ID.
@@ -99,14 +102,21 @@ orderRoutes.post("/", createOrder);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Order'
+ *             type: object
+ *             required:
+ *               - orderDate
+ *               - customerName
+ *               - productId
+ *             properties:
+ *               orderDate:
+ *                 type: string
+ *               customerName:
+ *                 type: string
+ *               productId:
+ *                 type: number
  *     responses:
  *       200:
  *         description: Pedido actualizado exitosamente.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Order'
  *       404:
  *         description: Pedido no encontrado.
  *       400:
@@ -116,7 +126,7 @@ orderRoutes.put("/:id", updateOrder);
 
 /**
  * @swagger
- * /orders/{id}:
+ * /api/orders/{id}:
  *   delete:
  *     summary: Elimina un pedido
  *     description: Elimina un pedido existente del sistema basado en su ID.
