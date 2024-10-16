@@ -18,14 +18,20 @@ app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 
 // Documentación Swagger
-app.use("/api/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 // Inicialización de la base de datos y el servidor
 AppDataSource.initialize()
   .then(() => {
     app.listen(PORT, () => {
-      console.log(`Servidor corriendo en http://localhost:${PORT}`);
-      console.log(`Documentación Swagger en http://localhost:${PORT}/api-docs`);
+      console.log(`Servidor corriendo en http://localhost:${PORT}\n`);
+
+      console.log(`Endpoints:`);
+      console.log(`API Products http://localhost:${PORT}/api/products`);
+      console.log(`API Orders http://localhost:${PORT}/api/orders\n`);
+
+      console.log(`Documentación:`);
+      console.log(`Swagger en http://localhost:${PORT}/api-docs`);
     });
   })
   .catch((error) => console.log(error));

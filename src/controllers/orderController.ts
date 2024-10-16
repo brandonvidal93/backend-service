@@ -35,52 +35,56 @@ export const getOrderById = async (req: Request, res: Response) => {
 };
 
 // POST - Crear un nuevo pedido
-export const createOrder = async (req: Request, res: Response) => {
+export const createOrder = async (req: Request, res: Response): Promise<any> => {
   try {
     const { orderDate, customerName, productId } = req.body;
     const product = await productRepository.findOneBy({ id: productId });
     if (!product) {
       return res.status(404).json({ message: "Producto no encontrado." });
+      // return '404'
     }
-
     const order = new Order();
     order.orderDate = orderDate;
     order.customerName = customerName;
     order.product = product;
-
     await orderRepository.save(order);
-    res.status(201).json(order);
+
+    return res.status(201).json(order);
+    // return '201';
   } catch (error) {
-    res.status(500).json({ message: "Error al crear el pedido." });
+    return res.status(500).json({ message: "Error al crear el pedido." });
+    // return '500'
   }
 };
 
 // PUT - Actualizar un pedido existente
-export const updateOrder = async (req: Request, res: Response) => {
+export const updateOrder = async (req: Request, res: Response): Promise<any> => {
   try {
     const { orderDate, customerName, productId } = req.body;
     const order = await orderRepository.findOneBy({
       id: parseInt(req.params.id),
     });
-
     if (order) {
       if (productId) {
         const product = await productRepository.findOneBy({ id: productId });
         if (!product) {
-          return res.status(404).json({ message: "Producto no encontrado." });
+          // return res.status(404).json({ message: "Producto no encontrado." });
+          return 'res.status(404).json({ message: "Producto no encontrado." });'
         }
         order.product = product;
       }
-
       order.orderDate = orderDate ?? order.orderDate;
       order.customerName = customerName ?? order.customerName;
       await orderRepository.save(order);
-      res.json(order);
+      // return res.json(order);
+      return 'res.json(order)';
     } else {
-      res.status(404).json({ message: "Pedido no encontrado." });
+      // res.status(404).json({ message: "Pedido no encontrado." });
+      return 'res.status(404).json({ message: "Pedido no encontrado." });'
     }
   } catch (error) {
-    res.status(500).json({ message: "Error al actualizar el pedido." });
+    // res.status(500).json({ message: "Error al actualizar el pedido." });
+    return 'res.status(500).json({ message: "Error al actualizar el pedido." });'
   }
 };
 
